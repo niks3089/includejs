@@ -48,7 +48,7 @@ else()
   set(DEFAULT_VM "vm.cpu_feat.json") # vmrunner
 endif(cpu_feat_vanilla)
 
-option(threading "Compile with SMP/threading support" ON)
+option(threading "Compile with SMP/threading support" OFF)
 
 option(silent "Disable most output during OS boot" OFF)
 
@@ -257,10 +257,7 @@ if(libprotobuf)
   include(${INCLUDEOS_ROOT}/cmake/protobuf.cmake)
 endif(libprotobuf)
 
-option(v8 "Build and install Google's v8 runtime library" ON)
-if (threading AND v8 AND "${ARCH}" STREQUAL "x86_64")
-    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/v8.cmake)
-endif()
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/v8.cmake)
 
 #
 # Installation

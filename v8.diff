@@ -1,48 +1,12 @@
-diff --git a/lib/v8/src/base/cpu.cc b/lib/v8/src/base/cpu.cc
-index 16eb7c9..4528961 100644
---- a/lib/v8/src/base/cpu.cc
-+++ b/lib/v8/src/base/cpu.cc
-@@ -8,7 +8,7 @@
- #include <intrin.h>  // __cpuid()
- #endif
- #if V8_OS_LINUX
--#include <linux/auxvec.h>  // AT_HWCAP
-+#include <auxvec.h>  // AT_HWCAP
- #endif
- #if V8_GLIBC_PREREQ(2, 16)
- #include <sys/auxv.h>  // getauxval()
-diff --git a/lib/v8/src/compiler/gap-resolver.cc b/lib/v8/src/compiler/gap-resolver.cc
-index 7b04198..796a1f7 100644
---- a/lib/v8/src/compiler/gap-resolver.cc
-+++ b/lib/v8/src/compiler/gap-resolver.cc
-@@ -26,12 +26,14 @@ inline bool IsRedundant(MoveOperands* move) { return move->IsRedundant(); }
+diff --git a/lib/v8/src/char-predicates.cc b/lib/v8/src/char-predicates.cc
+index 747f419..39aa30e 100644
+--- a/lib/v8/src/char-predicates.cc
++++ b/lib/v8/src/char-predicates.cc
+@@ -2,6 +2,7 @@
+ // Use of this source code is governed by a BSD-style license that can be
+ // found in the LICENSE file.
  
- void GapResolver::Resolve(ParallelMove* moves) const {
-   // Clear redundant moves.
-+#if 0
-   auto it =
-       std::remove_if(moves->begin(), moves->end(), std::ptr_fun(IsRedundant));
-   moves->erase(it, moves->end());
-   for (MoveOperands* move : *moves) {
-     if (!move->IsEliminated()) PerformMove(moves, move);
-   }
-+#endif
- }
- 
- void GapResolver::PerformMove(ParallelMove* moves, MoveOperands* move) const {
-@@ -82,6 +84,7 @@ void GapResolver::PerformMove(ParallelMove* moves, MoveOperands* move) const {
-   // The move may be blocked on a (at most one) pending move, in which case we
-   // have a cycle.  Search for such a blocking move and perform a swap to
-   // resolve it.
-+#if 0
-   auto blocker = std::find_if(moves->begin(), moves->end(),
-                               std::bind2nd(std::ptr_fun(&Blocks), destination));
-   if (blocker == moves->end()) {
-@@ -92,6 +95,7 @@ void GapResolver::PerformMove(ParallelMove* moves, MoveOperands* move) const {
-   }
- 
-   DCHECK((*blocker)->IsPending());
-+#endif
-   // Ensure source is a register or both are stack slots, to limit swap cases.
-   if (source.IsStackSlot() || source.IsFPStackSlot()) {
-     std::swap(source, destination);
++#define V8_INTL_SUPPORT
+ #ifndef V8_INTL_SUPPORT
+ #error Internationalization is expected to be enabled.
+ #endif  // V8_INTL_SUPPORT
