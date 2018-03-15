@@ -1,0 +1,29 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index cda9342..fb3e4e3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -257,6 +257,8 @@ if(libprotobuf)
+   include(${INCLUDEOS_ROOT}/cmake/protobuf.cmake)
+ endif(libprotobuf)
+ 
++include(${INCLUDEOS_ROOT}/cmake/uv.cmake)
++
+ #
+ # Installation
+ #
+diff --git a/lib/libuv/Makefile.am b/lib/libuv/Makefile.am
+index ae9d96b..b7917cb 100644
+--- a/lib/libuv/Makefile.am
++++ b/lib/libuv/Makefile.am
+@@ -416,6 +416,11 @@ libuv_la_SOURCES += src/unix/cygwin.c \
+                     src/unix/sysinfo-memory.c
+ endif
+ 
++if INCLUDEOS  
++include_HEADERS += include/uv-includeos.h
++libuv_la_SOURCES += src/unix/includeos.c \
++endif
++
+ if NETBSD
+ include_HEADERS += include/uv-bsd.h
+ libuv_la_SOURCES += src/unix/bsd-ifaddrs.c \
